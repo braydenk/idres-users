@@ -1,31 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Login from './components/Login';
-import Signup from './components/Signup';
+import SignIn from './components/SignIn';
+import Dashboard from './components/Dashboard';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      username: '',
+      email: '',
+      isLoggedIn: false
+    }
   };
+
+  setUser = (data) => {
+    this.setState({ username: data.username, email: data.email, isLoggedIn: true })
+  }
 
   render() {
     return (
-      <Router>
-        <div>
-          <button onClick={this.diplayLogin}>
-            <Link to="/login">Login</Link>
-          </button>
-
-          <button onClick={this.displaySignup}>
-            <Link to="/signup">Signup</Link>
-          </button>
-
-          <Route path="/login" component={Login}></Route>
-          <Route path="/signup" component={Signup}></Route>
-        </div>
-      </Router>
+      <div>
+        {this.state.isLoggedIn
+          ? <Dashboard />
+          : <SignIn setUser={this.setUser} />
+        }
+      </div>
     );
   }
 };
