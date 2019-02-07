@@ -5,6 +5,9 @@ import axios from 'axios';
 class App extends React.Component {
   constructor() {
     super();
+  }
+
+  componentDidMount() {
     this.getUsers()
   }
 
