@@ -6,6 +6,7 @@ import os
 class BaseConfig:
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = 'you-will-never-know'
 
 
 class DevelopmentConfig(BaseConfig):
