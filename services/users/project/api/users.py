@@ -3,6 +3,11 @@ from flask import Blueprint, jsonify, request
 from project.api.models import User
 from project import db
 
+"""
+TODO: Add error and exception handling for routes.
+"""
+
+
 users_blueprint = Blueprint('users', __name__)
 
 

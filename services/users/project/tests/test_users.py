@@ -3,6 +3,10 @@ import unittest
 
 from project.tests.base import BaseTestCase
 
+"""
+TODO: Add error and exception tests for routes.
+"""
+
 
 class TestUserService(BaseTestCase):
     """Tests for the Users Service."""
