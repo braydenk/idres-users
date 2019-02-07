@@ -1,51 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 class App extends React.Component {
   constructor() {
     super();
-
-    this.state = {
-      users: []
-    };
   };
 
-  componentDidMount() {
-    this.getUsers();
-  };
-
-  getUsers() {
-    axios.get(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`)
-      .then((res) => { this.setState({ users: res.data.data.users }); })
-      .catch((err) => { console.log(err); });
+  displayLogin() {
+    return (
+        <h1>Hello</h1>
+    );
   }
 
   render() {
     return (
-      <section className="section">
-        <div className="container">
-          <div className="columns">
-            <div className="column is-one-third">
-              <br/>
-              <h1 className="title is-1">All Users</h1>
-              <hr/><br/>
-              {
-                this.state.users.map((user) => {
-                  return (
-                    <h4
-                      key={user.id}
-                      className="box title is-4"
-                    >{ user.username }
-                    </h4>
-                  )
-                })
-              }
-            </div>
-          </div>
+      <Router>
+        <div>
+          <button onClick={this.diplayLogin}>
+            <Link to="/login">Login</Link>
+          </button>
+
+          <button onClick={this.displaySignup}>
+            <Link to="/signup">Signup</Link>
+          </button>
+
+          <Route path="/login" component={Login}></Route>
+          <Route path="/signup" component={Signup}></Route>
         </div>
-      </section>
-    )
+      </Router>
+    );
   }
 };
 
