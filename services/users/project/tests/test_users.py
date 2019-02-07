@@ -10,6 +10,13 @@ TODO: Add error and exception tests for routes.
 """
 
 
+def add_user(username, email):
+    user = User(username=username, email=email)
+    db.session.add(user)
+    db.session.commit()
+    return user
+
+
 class TestUserService(BaseTestCase):
     """Tests for the Users Service."""
 
@@ -31,9 +38,7 @@ class TestUserService(BaseTestCase):
 
     def test_get_single_user(self):
         """Get a single user from the db."""
-        user = User(username='brayden', email='braydenmkilleen@gmail.com')
-        db.session.add(user)
-        db.session.commit()
+        user = add_user('brayden', 'braydenmkilleen@gmail.com')
         with self.client:
             response = self.client.get(f'/users/{user.id}')
             data = json.loads(response.data.decode())
@@ -41,6 +46,22 @@ class TestUserService(BaseTestCase):
             self.assertIn('braydenmkilleen@gmail.com', data['data']['email'])
             self.assertIn('success', data['status'])
 
+    def test_all_users(self):
+        """Ensure get all users behaves correctly."""
+        add_user('brayden', 'braydenmkilleen@gmail.com')
+        add_user('test', 'test@test.com')
+        with self.client:
+            response = self.client.get('/users')
+            data = json.loads(response.data.decode())
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(len(data['data']['users']), 2)
+            self.assertIn('brayden', data['data']['users'][0]['username'])
+            self.assertIn(
+                'braydenmkilleen@gmail.com', data['data']['users'][0]['email'])
+            self.assertIn('tst', data['data']['users'][1]['username'])
+            self.assertIn(
+                'test@test.com', data['data']['users'][1]['email'])
+            self.assertIn('success', data['status'])
 
 if __name__ == '__main__':
     unittest.main()
