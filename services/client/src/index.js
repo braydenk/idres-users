@@ -10,12 +10,6 @@ class App extends React.Component {
     super();
   };
 
-  displayLogin() {
-    return (
-        <h1>Hello</h1>
-    );
-  }
-
   render() {
     return (
       <Router>
