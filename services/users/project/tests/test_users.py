@@ -58,10 +58,11 @@ class TestUserService(BaseTestCase):
             self.assertIn('brayden', data['data']['users'][0]['username'])
             self.assertIn(
                 'braydenmkilleen@gmail.com', data['data']['users'][0]['email'])
-            self.assertIn('tst', data['data']['users'][1]['username'])
+            self.assertIn('test', data['data']['users'][1]['username'])
             self.assertIn(
                 'test@test.com', data['data']['users'][1]['email'])
             self.assertIn('success', data['status'])
+
 
 if __name__ == '__main__':
     unittest.main()
