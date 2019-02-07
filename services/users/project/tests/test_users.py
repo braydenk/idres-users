@@ -1,6 +1,8 @@
 import json
 import unittest
 
+from project import db
+from project.api.models import User
 from project.tests.base import BaseTestCase
 
 """
@@ -25,6 +27,18 @@ class TestUserService(BaseTestCase):
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 201)
             self.assertIn('braydenmkilleen@gmail.com was added to db.', data['message'])
+            self.assertIn('success', data['status'])
+
+    def test_get_single_user(self):
+        """Get a single user from the db."""
+        user = User(username='brayden', email='braydenmkilleen@gmail.com')
+        db.session.add(user)
+        db.session.commit()
+        with self.client:
+            response = self.client.get(f'/users/{user.id}')
+            data = json.loads(response.data.decode())
+            self.assertIn('brayden', data['data']['username'])
+            self.assertIn('braydenmkilleen@gmail.com', data['data']['email'])
             self.assertIn('success', data['status'])
 
 
